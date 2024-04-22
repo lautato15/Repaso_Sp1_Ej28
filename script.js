@@ -1,24 +1,37 @@
 function linealizarEspiral(matriz) {
   let result = [];
-  let puntoInicial = ["i", 0, "j", 0];
-  let puntoFinal = ["i", 0, "j", matriz.length - 1];
+  let PI = [0, 0];
+  let PF = [0, matriz.length - 1];
   let ancho = matriz[0].length - 1;
   let alto = matriz.length - 1;
 
-  console.log("Punto Inicial: " + puntoInicial);
-  console.log("Punto Final: " + puntoFinal);
-  linea(puntoInicial, puntoFinal);
+  let n = matriz.length;
 
-  function linea(puntoInicial, puntoFinal) {
-    for (let k = 0; k < puntoFinal[3] + 1; k++) {
-      result.push(matriz[puntoInicial[1]][k]);
-    }
-    if (puntoInicial[1] === puntoFinal[1] && puntoInicial[3] < puntoFinal[3]) {
-      let proxPunto = ["i", alto, "j", puntoFinal[3]];
+  console.log("Punto Inicial: " + PI);
+  console.log("Punto Final: " + PF);
+  const test = linea(PI, PF);
+  console.log("Test: " + test);
+  linea(test[0], test[1]);
+  function linea(PI, PF) {
+    if (PI[0] === PF[0] && PI[1] < PF[1]) {
+      for (let k = 0; k < n + 1; k++) {
+        result.push(matriz[PI[0]][k]);
+      }
+
+      let proxPI = [PF[0] + 1, PF[1]];
+      let proxPF = [n - 1, PF[1]];
       console.log("Izquierda");
-      console.log(proxPunto);
+      console.log(proxPI);
+      console.log(proxPF);
+    } else if (PI[1] === PF[1] && PI[0] < PF[0]) {
+      n = n - 1;
+      let proxPI = ["i", ancho, "j", n];
+      let proxPF = [0];
+      console.log("Abajo");
+      console.log(proxPI);
+      console.log(proxPF);
     }
-    return puntoFinal;
+    return [proxPI, proxPF];
   }
 }
 let matriz = [
